@@ -29,10 +29,12 @@ public class GatewayForwardingService {
     }
 
     public ResponseEntity<String> forwardRequest(HttpServletRequest request){
+        // to get the current user
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         assert auth != null;
         String userId = String.valueOf(auth.getPrincipal());
+        // get the request id from log
         String requestId = MDC.get("requestId");
 
         String serviceName = routeResolver.resolve(request);
@@ -43,7 +45,7 @@ public class GatewayForwardingService {
         String baseUrl = loadBalancer.chooseInstance(instances);
 
         return webClient.get()
-                .uri(baseUrl + "/internal/data")
+                .uri(baseUrl + request.getRequestURI())
                 .header("X-User-Id", userId)
                 .header("X-Request-Id", requestId)
                 .retrieve()
