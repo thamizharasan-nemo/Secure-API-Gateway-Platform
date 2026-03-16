@@ -48,9 +48,9 @@ The gateway uses path-based routing to determine the destination service.
 
 | Path Pattern | Target Service |
 |--------------|---------------|
-| /feedback/** | feedback-service |
-| /chat/** | chat-service |
-| /queue/** | queue-service |
+| /product/** | product-service |
+| /order/** | order-service |
+| /payment/** | payment-service |
 
 ## Technology Stack
 
